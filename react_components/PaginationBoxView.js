@@ -190,7 +190,7 @@ export default class PaginationBoxView extends Component {
           breakView = (
             <BreakView breakLabel={this.props.breakLabel}
               breakClassName={this.props.breakClassName}
-              key="breakview" />
+              key={'breakview' + index} />
           )
 
           items.push(breakView)
