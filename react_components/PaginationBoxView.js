@@ -121,16 +121,17 @@ export default class PaginationBoxView extends Component {
       activeClassName={this.props.activeClassName}
       extraAriaContext={this.props.extraAriaContext}
       href={this.hrefBuilder(index)}
-      page={index + 1} />
+      page={index + 1}
+      key={index} />
   }
 
   pagination = () => {
-    let items = {};
+    let items = [];
 
     if (this.props.pageCount <= this.props.pageRangeDisplayed) {
 
       for (let index = 0; index < this.props.pageCount; index++) {
-        items['key' + index] = this.getPageElement(index);
+        items.push(this.getPageElement(index));
       }
 
     } else {
@@ -157,17 +158,17 @@ export default class PaginationBoxView extends Component {
         page = index + 1;
 
         if (page <= this.props.marginPagesDisplayed) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
         if (page > this.props.pageCount - this.props.marginPagesDisplayed) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
         if ((index >= this.state.selected - leftSide) && (index <= this.state.selected + rightSide)) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
@@ -180,10 +181,11 @@ export default class PaginationBoxView extends Component {
             <BreakView
               breakLabel={this.props.breakLabel}
               breakClassName={this.props.breakClassName}
+              key="breakview"
             />
           );
 
-          items['key' + index] = breakView;
+          items.push(breakView);
         }
       }
     }
