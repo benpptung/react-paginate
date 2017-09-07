@@ -119,9 +119,11 @@ var PaginationBoxView = function (_Component) {
 
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
             var key = 'breakview' + _index;
-            items.push(_react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel,
+            breakView = _react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel,
               breakClassName: _this.props.breakClassName,
-              key: key }));
+              key: key });
+
+            items.push(breakView);
           }
         }
       }
