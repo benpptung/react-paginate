@@ -209,7 +209,7 @@ var PaginationBoxView = function (_Component) {
         function (_) {
           var pagination = [_react2.default.createElement(
             'li',
-            { className: previousClasses },
+            { className: previousClasses, key: 'prev' },
             _react2.default.createElement(
               'a',
               { onClick: _this3.handlePreviousPage,
@@ -221,7 +221,7 @@ var PaginationBoxView = function (_Component) {
             )
           )].concat(_this3.pagination()).concat(_react2.default.createElement(
             'li',
-            { className: nextClasses },
+            { className: nextClasses, key: 'next' },
             _react2.default.createElement(
               'a',
               { onClick: _this3.handleNextPage,
