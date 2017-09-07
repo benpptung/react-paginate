@@ -45,21 +45,21 @@ var PaginationBoxView = function (_Component) {
     var _this = _possibleConstructorReturn(this, (PaginationBoxView.__proto__ || Object.getPrototypeOf(PaginationBoxView)).call(this, props));
 
     _this.handlePreviousPage = function (evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
       if (_this.state.selected > 0) {
         _this.handlePageSelected(_this.state.selected - 1, evt);
       }
     };
 
     _this.handleNextPage = function (evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
       if (_this.state.selected < _this.props.pageCount - 1) {
         _this.handlePageSelected(_this.state.selected + 1, evt);
       }
     };
 
     _this.handlePageSelected = function (selected, evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
 
       if (_this.state.selected === selected) return;
 
@@ -70,7 +70,7 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.callCallback = function (selectedItem) {
-      if (typeof _this.props.onPageChange !== "undefined" && typeof _this.props.onPageChange === "function") {
+      if (typeof _this.props.onPageChange !== 'undefined' && typeof _this.props.onPageChange === 'function') {
         _this.props.onPageChange({ selected: selectedItem });
       }
     };
@@ -127,11 +127,9 @@ var PaginationBoxView = function (_Component) {
           var breakLabelValue = items[breakLabelKey];
 
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
-            breakView = _react2.default.createElement(_BreakView2.default, {
-              breakLabel: _this.props.breakLabel,
+            breakView = _react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel,
               breakClassName: _this.props.breakClassName,
-              key: 'breakview'
-            });
+              key: 'breakview' });
 
             items.push(breakView);
           }
@@ -172,8 +170,7 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'getPageElement',
     value: function getPageElement(index) {
-      return _react2.default.createElement(_PageView2.default, {
-        onClick: this.handlePageSelected.bind(null, index),
+      return _react2.default.createElement(_PageView2.default, { onClick: this.handlePageSelected.bind(null, index),
         selected: this.state.selected === index,
         pageClassName: this.props.pageClassName,
         pageLinkClassName: this.props.pageLinkClassName,
@@ -256,15 +253,19 @@ PaginationBoxView.defaultProps = {
   pageCount: 10,
   pageRangeDisplayed: 2,
   marginPagesDisplayed: 3,
-  activeClassName: "selected",
-  previousClassName: "previous",
-  nextClassName: "next",
-  previousLabel: "Previous",
-  nextLabel: "Next",
-  breakLabel: "...",
-  disabledClassName: "disabled",
+  activeClassName: 'selected',
+  previousClassName: 'previous',
+  nextClassName: 'next',
+  previousLabel: 'Previous',
+  nextLabel: 'Next',
+  breakLabel: '...',
+  disabledClassName: 'disabled',
   disableInitialCallback: false
 };
 exports.default = PaginationBoxView;
-;
+
+
+if (process.env.NODE_ENV !== 'production') {
+  PaginationBoxView.displayName = 'PaginationBoxView';
+}
 //# sourceMappingURL=PaginationBoxView.js.map

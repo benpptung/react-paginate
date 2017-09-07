@@ -21,5 +21,9 @@ var BreakView = function BreakView(props) {
   );
 };
 
+if (process.env.NODE_ENV !== 'production') {
+  BreakView.displayName = 'BreakView';
+}
+
 exports.default = BreakView;
 //# sourceMappingURL=BreakView.js.map

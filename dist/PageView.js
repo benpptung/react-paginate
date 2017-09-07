@@ -45,5 +45,9 @@ var PageView = function PageView(props) {
   );
 };
 
+if (process.env.NODE_ENV !== 'production') {
+  PageView.displayName = 'PageView';
+}
+
 exports.default = PageView;
 //# sourceMappingURL=PageView.js.map

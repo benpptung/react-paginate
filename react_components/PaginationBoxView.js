@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-import PageView from './PageView';
-import BreakView from './BreakView';
+import PageView from './PageView'
+import BreakView from './BreakView'
 
 
 export default class PaginationBoxView extends Component {
@@ -37,84 +37,83 @@ export default class PaginationBoxView extends Component {
     pageCount             : 10,
     pageRangeDisplayed    : 2,
     marginPagesDisplayed  : 3,
-    activeClassName       : "selected",
-    previousClassName     : "previous",
-    nextClassName         : "next",
-    previousLabel         : "Previous",
-    nextLabel             : "Next",
-    breakLabel            : "...",
-    disabledClassName     : "disabled",
+    activeClassName       : 'selected',
+    previousClassName     : 'previous',
+    nextClassName         : 'next',
+    previousLabel         : 'Previous',
+    nextLabel             : 'Next',
+    breakLabel            : '...',
+    disabledClassName     : 'disabled',
     disableInitialCallback: false
   };
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      selected: props.initialPage ? props.initialPage :
-                props.forcePage   ? props.forcePage :
-                0
-    };
+      selected: props.initialPage ? props.initialPage
+                : props.forcePage ? props.forcePage
+                : 0
+    }
   }
 
   componentDidMount() {
     // Call the callback with the initialPage item:
-    if (typeof(this.props.initialPage) !== 'undefined' && !this.props.disableInitialCallback) {
-      this.callCallback(this.props.initialPage);
+    if (typeof (this.props.initialPage) !== 'undefined' && !this.props.disableInitialCallback) {
+      this.callCallback(this.props.initialPage)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (typeof(nextProps.forcePage) !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
-      this.setState({selected: nextProps.forcePage});
+    if (typeof (nextProps.forcePage) !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
+      this.setState({selected: nextProps.forcePage})
     }
   }
 
   handlePreviousPage = evt => {
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
     if (this.state.selected > 0) {
-      this.handlePageSelected(this.state.selected - 1, evt);
+      this.handlePageSelected(this.state.selected - 1, evt)
     }
   };
 
   handleNextPage = evt => {
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
     if (this.state.selected < this.props.pageCount - 1) {
-      this.handlePageSelected(this.state.selected + 1, evt);
+      this.handlePageSelected(this.state.selected + 1, evt)
     }
   };
 
   handlePageSelected = (selected, evt) => {
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
 
-    if (this.state.selected === selected) return;
+    if (this.state.selected === selected) return
 
-    this.setState({selected: selected});
+    this.setState({selected: selected})
 
     // Call the callback with the new selected item:
-    this.callCallback(selected);
+    this.callCallback(selected)
   };
 
   hrefBuilder(pageIndex) {
-    if (this.props.hrefBuilder &&
-      pageIndex !== this.state.selected &&
-      pageIndex >= 0 &&
-      pageIndex < this.props.pageCount
+    if (this.props.hrefBuilder
+      && pageIndex !== this.state.selected
+      && pageIndex >= 0
+      && pageIndex < this.props.pageCount
     ) {
-      return this.props.hrefBuilder(pageIndex + 1);
+      return this.props.hrefBuilder(pageIndex + 1)
     }
   }
 
   callCallback = (selectedItem) => {
-    if (typeof(this.props.onPageChange) !== "undefined" &&
-        typeof(this.props.onPageChange) === "function") {
-      this.props.onPageChange({selected: selectedItem});
+    if (typeof (this.props.onPageChange) !== 'undefined'
+        && typeof (this.props.onPageChange) === 'function') {
+      this.props.onPageChange({selected: selectedItem})
     }
   };
 
   getPageElement(index) {
-    return <PageView
-      onClick={this.handlePageSelected.bind(null, index)}
+    return <PageView onClick={this.handlePageSelected.bind(null, index)}
       selected={this.state.selected === index}
       pageClassName={this.props.pageClassName}
       pageLinkClassName={this.props.pageLinkClassName}
@@ -126,81 +125,80 @@ export default class PaginationBoxView extends Component {
   }
 
   pagination = () => {
-    let items = [];
+    let items = []
 
     if (this.props.pageCount <= this.props.pageRangeDisplayed) {
 
       for (let index = 0; index < this.props.pageCount; index++) {
-        items.push(this.getPageElement(index));
+        items.push(this.getPageElement(index))
       }
 
-    } else {
+    }
+    else {
 
-      let leftSide  = (this.props.pageRangeDisplayed / 2);
-      let rightSide = (this.props.pageRangeDisplayed - leftSide);
+      let leftSide = (this.props.pageRangeDisplayed / 2)
+      let rightSide = (this.props.pageRangeDisplayed - leftSide)
 
       if (this.state.selected > this.props.pageCount - this.props.pageRangeDisplayed / 2) {
-        rightSide = this.props.pageCount - this.state.selected;
-        leftSide  = this.props.pageRangeDisplayed - rightSide;
+        rightSide = this.props.pageCount - this.state.selected
+        leftSide = this.props.pageRangeDisplayed - rightSide
       }
       else if (this.state.selected < this.props.pageRangeDisplayed / 2) {
-        leftSide  = this.state.selected;
-        rightSide = this.props.pageRangeDisplayed - leftSide;
+        leftSide = this.state.selected
+        rightSide = this.props.pageRangeDisplayed - leftSide
       }
 
-      let index;
-      let page;
-      let breakView;
-      let createPageView = (index) => this.getPageElement(index);
+      let index
+      let page
+      let breakView
+      let createPageView = (index) => this.getPageElement(index)
 
       for (index = 0; index < this.props.pageCount; index++) {
 
-        page = index + 1;
+        page = index + 1
 
         if (page <= this.props.marginPagesDisplayed) {
-          items.push(createPageView(index));
-          continue;
+          items.push(createPageView(index))
+          continue
         }
 
         if (page > this.props.pageCount - this.props.marginPagesDisplayed) {
-          items.push(createPageView(index));
-          continue;
+          items.push(createPageView(index))
+          continue
         }
 
         if ((index >= this.state.selected - leftSide) && (index <= this.state.selected + rightSide)) {
-          items.push(createPageView(index));
-          continue;
+          items.push(createPageView(index))
+          continue
         }
 
-        let keys            = Object.keys(items);
-        let breakLabelKey   = keys[keys.length - 1];
-        let breakLabelValue = items[breakLabelKey];
+        let keys = Object.keys(items)
+        let breakLabelKey = keys[keys.length - 1]
+        let breakLabelValue = items[breakLabelKey]
 
         if (this.props.breakLabel && breakLabelValue !== breakView) {
           breakView = (
-            <BreakView
-              breakLabel={this.props.breakLabel}
+            <BreakView breakLabel={this.props.breakLabel}
               breakClassName={this.props.breakClassName}
-              key="breakview"
-            />
-          );
+              key="breakview" />
+          )
 
-          items.push(breakView);
+          items.push(breakView)
         }
       }
     }
 
-    return items;
+    return items
   };
 
   render() {
-    let disabled = this.props.disabledClassName;
+    let disabled = this.props.disabledClassName
 
     const previousClasses = classNames(this.props.previousClassName,
-                                       {[disabled]: this.state.selected === 0});
+                                       {[disabled]: this.state.selected === 0})
 
     const nextClasses = classNames(this.props.nextClassName,
-                                   {[disabled]: this.state.selected === this.props.pageCount - 1});
+                                   {[disabled]: this.state.selected === this.props.pageCount - 1})
 
     return (
       <ul className={this.props.containerClassName}>
@@ -226,6 +224,10 @@ export default class PaginationBoxView extends Component {
           </a>
         </li>
       </ul>
-    );
+    )
   }
-};
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  PaginationBoxView.displayName = 'PaginationBoxView'
+}

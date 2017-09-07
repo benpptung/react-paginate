@@ -73,6 +73,7 @@
     ]
   },
   "eslintIgnore": [
+    "webpack.config.js",
     "__tests__",
     "demo",
     "dist",
