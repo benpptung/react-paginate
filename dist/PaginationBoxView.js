@@ -197,42 +197,51 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var disabled = this.props.disabledClassName;
-
       var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0));
-
       var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageCount - 1));
 
       return _react2.default.createElement(
         'ul',
         { className: this.props.containerClassName },
-        _react2.default.createElement(
-          'li',
-          { className: previousClasses },
-          _react2.default.createElement(
-            'a',
-            { onClick: this.handlePreviousPage,
-              className: this.props.previousLinkClassName,
-              href: this.hrefBuilder(this.state.selected - 1),
-              tabIndex: '0',
-              onKeyPress: this.handlePreviousPage },
-            this.props.previousLabel
-          )
-        ),
-        this.pagination(),
-        _react2.default.createElement(
-          'li',
-          { className: nextClasses },
-          _react2.default.createElement(
-            'a',
-            { onClick: this.handleNextPage,
-              className: this.props.nextLinkClassName,
-              href: this.hrefBuilder(this.state.selected + 1),
-              tabIndex: '0',
-              onKeyPress: this.handleNextPage },
-            this.props.nextLabel
-          )
-        )
+        function (_) {
+          var pagination = [_react2.default.createElement(
+            'li',
+            { className: previousClasses },
+            _react2.default.createElement(
+              'a',
+              { onClick: _this3.handlePreviousPage,
+                className: _this3.props.previousLinkClassName,
+                href: _this3.hrefBuilder(_this3.state.selected - 1),
+                tabIndex: '0',
+                onKeyPress: _this3.handlePreviousPage },
+              _this3.props.previousLabel
+            )
+          )].concat(_this3.pagination()).concat(_react2.default.createElement(
+            'li',
+            { className: nextClasses },
+            _react2.default.createElement(
+              'a',
+              { onClick: _this3.handleNextPage,
+                className: _this3.props.nextLinkClassName,
+                href: _this3.hrefBuilder(_this3.state.selected + 1),
+                tabIndex: '0',
+                onKeyPress: _this3.handleNextPage },
+              _this3.props.nextLabel
+            )
+          ));
+          if (_this3.props.side == 'left') {
+            pagination.splice(1, 0, pagination.pop());
+          }
+
+          if (_this3.props.side == 'right') {
+            pagination.splice(pagination.length - 2, 0, pagination.shift());
+          }
+
+          return pagination;
+        }()
       );
     }
   }]);
@@ -261,7 +270,8 @@ PaginationBoxView.propTypes = {
   previousLinkClassName: _propTypes2.default.string,
   nextLinkClassName: _propTypes2.default.string,
   disabledClassName: _propTypes2.default.string,
-  breakClassName: _propTypes2.default.string
+  breakClassName: _propTypes2.default.string,
+  side: _propTypes2.default.oneOf(['both', 'left', 'right'])
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,

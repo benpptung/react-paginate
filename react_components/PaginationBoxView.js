@@ -30,7 +30,8 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
     disabledClassName     : PropTypes.string,
-    breakClassName        : PropTypes.string
+    breakClassName        : PropTypes.string,
+    side                  : PropTypes.oneOf(['both', 'left', 'right'])
   };
 
   static defaultProps = {
@@ -204,36 +205,46 @@ export default class PaginationBoxView extends Component {
 
   render() {
     let disabled = this.props.disabledClassName
-
     const previousClasses = classNames(this.props.previousClassName,
                                        {[disabled]: this.state.selected === 0})
-
     const nextClasses = classNames(this.props.nextClassName,
                                    {[disabled]: this.state.selected === this.props.pageCount - 1})
 
     return (
       <ul className={this.props.containerClassName}>
-        <li className={previousClasses}>
-          <a onClick={this.handlePreviousPage}
-             className={this.props.previousLinkClassName}
-             href={this.hrefBuilder(this.state.selected - 1)}
-             tabIndex="0"
-             onKeyPress={this.handlePreviousPage}>
-            {this.props.previousLabel}
-          </a>
-        </li>
+        {(_=> {
+          var pagination = [
+            <li className={previousClasses}>
+              <a onClick={this.handlePreviousPage}
+                 className={this.props.previousLinkClassName}
+                 href={this.hrefBuilder(this.state.selected - 1)}
+                 tabIndex="0"
+                 onKeyPress={this.handlePreviousPage}>
+                {this.props.previousLabel}
+              </a>
+            </li>]
+            .concat(this.pagination())
+            .concat(
+              <li className={nextClasses}>
+                <a onClick={this.handleNextPage}
+                   className={this.props.nextLinkClassName}
+                   href={this.hrefBuilder(this.state.selected + 1)}
+                   tabIndex="0"
+                   onKeyPress={this.handleNextPage}>
+                  {this.props.nextLabel}
+                </a>
+              </li>
+            )
+          if (this.props.side == 'left') {
+            pagination.splice(1, 0, pagination.pop())
+          }
 
-        {this.pagination()}
+          if (this.props.side == 'right') {
+            pagination.splice(pagination.length - 2, 0, pagination.shift())
+          }
 
-        <li className={nextClasses}>
-          <a onClick={this.handleNextPage}
-             className={this.props.nextLinkClassName}
-             href={this.hrefBuilder(this.state.selected + 1)}
-             tabIndex="0"
-             onKeyPress={this.handleNextPage}>
-            {this.props.nextLabel}
-          </a>
-        </li>
+          return pagination
+        })()}
       </ul>
     )
   }
