@@ -47,26 +47,17 @@ var PaginationBoxView = function (_Component) {
     _this.handlePreviousPage = function (evt) {
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
       if (_this.state.selected > 0) {
-        _this.handlePageSelected(_this.state.selected - 1, evt);
+        //this.handlePageSelected(this.state.selected - 1, evt)
+        _this.handlePageSelectedIn[_this.state.selected - 1](evt);
       }
     };
 
     _this.handleNextPage = function (evt) {
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
       if (_this.state.selected < _this.props.pageCount - 1) {
-        _this.handlePageSelected(_this.state.selected + 1, evt);
+        //this.handlePageSelected(this.state.selected + 1, evt)
+        _this.handlePageSelectedIn[_this.state.selected + 1](evt);
       }
-    };
-
-    _this.handlePageSelected = function (selected, evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
-
-      if (_this.state.selected === selected) return;
-
-      _this.setState({ selected: selected });
-
-      // Call the callback with the new selected item:
-      _this.callCallback(selected);
     };
 
     _this.callCallback = function (selectedItem) {
@@ -127,11 +118,10 @@ var PaginationBoxView = function (_Component) {
           var breakLabelValue = items[breakLabelKey];
 
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
-            breakView = _react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel,
+            var key = 'breakview' + _index;
+            items.push(_react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel,
               breakClassName: _this.props.breakClassName,
-              key: 'breakview' });
-
-            items.push(breakView);
+              key: key }));
           }
         }
       }
@@ -142,6 +132,12 @@ var PaginationBoxView = function (_Component) {
     _this.state = {
       selected: props.initialPage ? props.initialPage : props.forcePage ? props.forcePage : 0
     };
+
+    _this.handlePageSelectedIn = {};
+    for (var i = 0; i < props.pageCount; ++i) {
+      _this.handlePageSelectedIn[i] = _this.handlePageSelected(i);
+    }
+
     return _this;
   }
 
@@ -161,6 +157,22 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
+    key: 'handlePageSelected',
+    value: function handlePageSelected(selected) {
+      var _this2 = this;
+
+      return function (evt) {
+        evt.preventDefault ? evt.preventDefault() : evt.returnValue = false; // eslint-disable-line no-unused-expressions
+
+        if (_this2.state.selected === selected) return;
+
+        _this2.setState({ selected: selected });
+
+        // Call the callback with the new selected item:
+        _this2.callCallback(selected);
+      };
+    }
+  }, {
     key: 'hrefBuilder',
     value: function hrefBuilder(pageIndex) {
       if (this.props.hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < this.props.pageCount) {
@@ -170,7 +182,7 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'getPageElement',
     value: function getPageElement(index) {
-      return _react2.default.createElement(_PageView2.default, { onClick: this.handlePageSelected.bind(null, index),
+      return _react2.default.createElement(_PageView2.default, { onClick: this.handlePageSelectedIn[index],
         selected: this.state.selected === index,
         pageClassName: this.props.pageClassName,
         pageLinkClassName: this.props.pageLinkClassName,
