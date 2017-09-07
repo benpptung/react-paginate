@@ -55,6 +55,12 @@ export default class PaginationBoxView extends Component {
                 : props.forcePage ? props.forcePage
                 : 0
     }
+
+    this.handlePageSelectedIn = {}
+    for (let i = 0; i < props.pageCount; ++i) {
+      this.handlePageSelectedIn[i] = this.handlePageSelected(i)
+    }
+
   }
 
   componentDidMount() {
@@ -73,27 +79,31 @@ export default class PaginationBoxView extends Component {
   handlePreviousPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
     if (this.state.selected > 0) {
-      this.handlePageSelected(this.state.selected - 1, evt)
+      //this.handlePageSelected(this.state.selected - 1, evt)
+      this.handlePageSelectedIn[this.state.selected - 1](evt)
     }
   };
 
   handleNextPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
     if (this.state.selected < this.props.pageCount - 1) {
-      this.handlePageSelected(this.state.selected + 1, evt)
+      //this.handlePageSelected(this.state.selected + 1, evt)
+      this.handlePageSelectedIn[this.state.selected + 1](evt)
     }
   };
 
-  handlePageSelected = (selected, evt) => {
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
+  handlePageSelected(selected) {
+    return evt=> {
+      evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false) // eslint-disable-line no-unused-expressions
 
-    if (this.state.selected === selected) return
+      if (this.state.selected === selected) return
 
-    this.setState({selected: selected})
+      this.setState({selected: selected})
 
-    // Call the callback with the new selected item:
-    this.callCallback(selected)
-  };
+      // Call the callback with the new selected item:
+      this.callCallback(selected)
+    }
+  }
 
   hrefBuilder(pageIndex) {
     if (this.props.hrefBuilder
@@ -113,7 +123,7 @@ export default class PaginationBoxView extends Component {
   };
 
   getPageElement(index) {
-    return <PageView onClick={this.handlePageSelected.bind(null, index)}
+    return <PageView onClick={this.handlePageSelectedIn[index]}
       selected={this.state.selected === index}
       pageClassName={this.props.pageClassName}
       pageLinkClassName={this.props.pageLinkClassName}
