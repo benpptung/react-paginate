@@ -214,7 +214,7 @@ export default class PaginationBoxView extends Component {
       <ul className={this.props.containerClassName}>
         {(_=> {
           var pagination = [
-            <li className={previousClasses}>
+            <li className={previousClasses} key="prev">
               <a onClick={this.handlePreviousPage}
                  className={this.props.previousLinkClassName}
                  href={this.hrefBuilder(this.state.selected - 1)}
@@ -225,7 +225,7 @@ export default class PaginationBoxView extends Component {
             </li>]
             .concat(this.pagination())
             .concat(
-              <li className={nextClasses}>
+              <li className={nextClasses} key="next">
                 <a onClick={this.handleNextPage}
                    className={this.props.nextLinkClassName}
                    href={this.hrefBuilder(this.state.selected + 1)}
