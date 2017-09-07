@@ -76,12 +76,12 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.pagination = function () {
-      var items = {};
+      var items = [];
 
       if (_this.props.pageCount <= _this.props.pageRangeDisplayed) {
 
         for (var index = 0; index < _this.props.pageCount; index++) {
-          items['key' + index] = _this.getPageElement(index);
+          items.push(_this.getPageElement(index));
         }
       } else {
 
@@ -108,17 +108,17 @@ var PaginationBoxView = function (_Component) {
           page = _index + 1;
 
           if (page <= _this.props.marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
           if (page > _this.props.pageCount - _this.props.marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
           if (_index >= _this.state.selected - leftSide && _index <= _this.state.selected + rightSide) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
@@ -129,10 +129,11 @@ var PaginationBoxView = function (_Component) {
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
               breakLabel: _this.props.breakLabel,
-              breakClassName: _this.props.breakClassName
+              breakClassName: _this.props.breakClassName,
+              key: 'breakview'
             });
 
-            items['key' + _index] = breakView;
+            items.push(breakView);
           }
         }
       }
@@ -179,7 +180,8 @@ var PaginationBoxView = function (_Component) {
         activeClassName: this.props.activeClassName,
         extraAriaContext: this.props.extraAriaContext,
         href: this.hrefBuilder(index),
-        page: index + 1 });
+        page: index + 1,
+        key: index });
     }
   }, {
     key: 'render',
