@@ -18,10 +18,6 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _reactAddonsCreateFragment = require('react-addons-create-fragment');
-
-var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
-
 var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
@@ -210,7 +206,7 @@ var PaginationBoxView = function (_Component) {
             this.props.previousLabel
           )
         ),
-        (0, _reactAddonsCreateFragment2.default)(this.pagination()),
+        this.pagination(),
         _react2.default.createElement(
           'li',
           { className: nextClasses },

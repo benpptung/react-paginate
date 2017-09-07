@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
 import BreakView from './BreakView';
 
@@ -213,7 +212,7 @@ export default class PaginationBoxView extends Component {
           </a>
         </li>
 
-        {createFragment(this.pagination())}
+        {this.pagination()}
 
         <li className={nextClasses}>
           <a onClick={this.handleNextPage}
