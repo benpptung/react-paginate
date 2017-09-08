@@ -157,6 +157,14 @@ var PaginationBoxView = function (_Component) {
       if (typeof nextProps.forcePage !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
         this.setState({ selected: nextProps.forcePage });
       }
+
+      var pageCountNew = nextProps.pageCount;
+      if (pageCountNew > this.handlePageSelectedIn.length) {
+        for (var i = 0; i < this.props.pageCount; ++i) {
+          if (this.handlePageSelectedIn[i]) continue;
+          this.handlePageSelectedIn[i] = this.handlePageSelected(i);
+        }
+      }
     }
   }, {
     key: 'handlePageSelected',
