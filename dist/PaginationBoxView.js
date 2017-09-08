@@ -135,9 +135,9 @@ var PaginationBoxView = function (_Component) {
       selected: props.initialPage ? props.initialPage : props.forcePage ? props.forcePage : 0
     };
 
-    _this.handlePageSelectedIn = {};
+    _this.handlePageSelectedIn = [];
     for (var i = 0; i < props.pageCount; ++i) {
-      _this.handlePageSelectedIn[i] = _this.handlePageSelected(i);
+      _this.handlePageSelectedIn.push(_this.handlePageSelected(i));
     }
 
     return _this;

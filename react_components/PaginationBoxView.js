@@ -57,9 +57,9 @@ export default class PaginationBoxView extends Component {
                 : 0
     }
 
-    this.handlePageSelectedIn = {}
+    this.handlePageSelectedIn = []
     for (let i = 0; i < props.pageCount; ++i) {
-      this.handlePageSelectedIn[i] = this.handlePageSelected(i)
+      this.handlePageSelectedIn.push(this.handlePageSelected(i))
     }
 
   }
