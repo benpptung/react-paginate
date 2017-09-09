@@ -61,7 +61,6 @@ export default class PaginationBoxView extends Component {
     for (let i = 0; i < props.pageCount; ++i) {
       this.handlePageSelectedIn.push(this.handlePageSelected(i))
     }
-
   }
 
   componentDidMount() {
@@ -77,11 +76,9 @@ export default class PaginationBoxView extends Component {
     }
 
     var pageCountNew = nextProps.pageCount
-    if (pageCountNew > this.handlePageSelectedIn.length) {
-      for (let i = 0; i < this.props.pageCount; ++i) {
-        if (this.handlePageSelectedIn[i]) continue
-        this.handlePageSelectedIn[i] = this.handlePageSelected(i)
-      }
+    for (let i = 0; i < pageCountNew; ++i) {
+      if (this.handlePageSelectedIn[i]) continue
+      this.handlePageSelectedIn[i] = this.handlePageSelected(i)
     }
   }
 
@@ -214,9 +211,9 @@ export default class PaginationBoxView extends Component {
   render() {
     let disabled = this.props.disabledClassName
     const previousClasses = classNames(this.props.previousClassName,
-                                       {[disabled]: this.state.selected === 0})
+                                       {[disabled]: this.state.selected === 0 || this.props.pageCount < 2 })
     const nextClasses = classNames(this.props.nextClassName,
-                                   {[disabled]: this.state.selected === this.props.pageCount - 1})
+                                   {[disabled]: this.state.selected === this.props.pageCount - 1 || this.props.pageCount < 2 })
 
     return (
       <ul className={this.props.containerClassName}>

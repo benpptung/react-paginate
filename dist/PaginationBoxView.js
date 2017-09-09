@@ -139,7 +139,6 @@ var PaginationBoxView = function (_Component) {
     for (var i = 0; i < props.pageCount; ++i) {
       _this.handlePageSelectedIn.push(_this.handlePageSelected(i));
     }
-
     return _this;
   }
 
@@ -159,11 +158,9 @@ var PaginationBoxView = function (_Component) {
       }
 
       var pageCountNew = nextProps.pageCount;
-      if (pageCountNew > this.handlePageSelectedIn.length) {
-        for (var i = 0; i < this.props.pageCount; ++i) {
-          if (this.handlePageSelectedIn[i]) continue;
-          this.handlePageSelectedIn[i] = this.handlePageSelected(i);
-        }
+      for (var i = 0; i < pageCountNew; ++i) {
+        if (this.handlePageSelectedIn[i]) continue;
+        this.handlePageSelectedIn[i] = this.handlePageSelected(i);
       }
     }
   }, {
@@ -208,8 +205,8 @@ var PaginationBoxView = function (_Component) {
       var _this3 = this;
 
       var disabled = this.props.disabledClassName;
-      var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0));
-      var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageCount - 1));
+      var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0 || this.props.pageCount < 2));
+      var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageCount - 1 || this.props.pageCount < 2));
 
       return _react2.default.createElement(
         'ul',
