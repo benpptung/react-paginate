@@ -22,8 +22,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.7",
-    "react": "^15.5.4"
+    "prop-types": "^15.5.7"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -48,6 +47,9 @@
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^1.16.2"
+  },
+  "peerDependencies": {
+    "react": "^15.3.0 || ^16.0.0"
   },
   "scripts": {
     "test": "BABEL_JEST_STAGE=0 jest",
